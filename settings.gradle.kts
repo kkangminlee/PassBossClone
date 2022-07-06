@@ -13,4 +13,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "PassorderBossClone"
-include ':app'
+include (":app")
+
+
