@@ -45,6 +45,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":core-ui"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
+
     KotlinDependencies.run {
         implementation(kotlin)
         implementation(coroutines)
