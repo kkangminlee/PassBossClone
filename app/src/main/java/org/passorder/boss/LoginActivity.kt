@@ -2,10 +2,11 @@ package org.passorder.boss
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import org.passorder.boss.databinding.ActivityLoginBinding
+import org.passorder.ui.base.BindingActivity
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
     }
 }
