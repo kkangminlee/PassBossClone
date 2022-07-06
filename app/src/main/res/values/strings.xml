@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PassorderBossClone</string>
+    <string name="login_title">패스오더</string>
+    <string name="login_sub_title">새로운 주문의 시대</string>
+    <string name="id">아이디</string>
+    <string name="pw">비밀번호</string>
+    <string name="login">로그인</string>
+    <string name="version">v2.12.15(staging)</string>
 </resources>
