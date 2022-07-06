@@ -16,3 +16,4 @@ rootProject.name = "PassorderBossClone"
 include (":app")
 
 
+include(":core-ui")
