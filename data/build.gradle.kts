@@ -24,6 +24,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
+
     AndroidXDependencies.run {
         implementation(hilt)
     }

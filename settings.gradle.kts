@@ -18,3 +18,4 @@ include (":app")
 
 include(":core-ui")
 include(":data")
+include(":domain")
