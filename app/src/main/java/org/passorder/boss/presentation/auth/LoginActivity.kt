@@ -1,7 +1,7 @@
-package org.passorder.boss
+package org.passorder.boss.presentation.auth
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import org.passorder.boss.R
 import org.passorder.boss.databinding.ActivityLoginBinding
 import org.passorder.ui.base.BindingActivity
 
