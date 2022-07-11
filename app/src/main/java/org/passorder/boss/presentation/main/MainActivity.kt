@@ -3,11 +3,13 @@ package org.passorder.boss.presentation.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import org.passorder.boss.databinding.ActivityMainBinding
 import org.passorder.boss.presentation.main.history.HistoryFragment
 import org.passorder.boss.presentation.main.order.OrderFragment
 import org.passorder.boss.presentation.main.other.MenuFragment
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,5 +38,4 @@ class MainActivity : AppCompatActivity() {
             tab.text = tabText[position]
         }.attach()
     }
-
 }
