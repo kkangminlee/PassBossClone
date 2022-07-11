@@ -1,23 +1,41 @@
 package org.passorder.boss.presentation.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import org.passorder.boss.R
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import org.passorder.boss.databinding.ActivityMainBinding
+import org.passorder.boss.presentation.main.history.HistoryFragment
+import org.passorder.boss.presentation.main.order.OrderFragment
+import org.passorder.boss.presentation.main.other.MenuFragment
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: MainViewPagerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initEvent()
+        initView()
     }
 
-    private fun initEvent() {
+    private fun initView() {
+        val tabText = listOf("주문", "지난주문", "메뉴", "분석", "스토리", "적립내역")
 
+        binding.vpMenu.adapter = MainViewPagerAdapter(this).apply {
+            fragmentList = listOf(
+                OrderFragment(),
+                HistoryFragment(),
+                MenuFragment(),
+                MenuFragment(),
+                MenuFragment(),
+                MenuFragment()
+            )
+        }
+
+        TabLayoutMediator(binding.tlMenu, binding.vpMenu) { tab, position ->
+            tab.text = tabText[position]
+        }.attach()
     }
-
 }

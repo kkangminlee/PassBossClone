@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="org.passorder.boss.presentation.auth.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +50,7 @@
             app:layout_constraintVertical_bias="0.65">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_id"
+                android:id="@+id/et_id_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -60,15 +63,17 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:maxLines="1"
+                    android:text="@={viewModel.id}"
                     android:textCursorDrawable="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_pw"
+                android:id="@+id/et_pw_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -79,13 +84,15 @@
                 app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_id">
+                app:layout_constraintTop_toBottomOf="@id/et_id_layout">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:maxLines="1"
+                    android:text="@={viewModel.pw}"
                     android:textCursorDrawable="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,7 +107,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_pw" />
+                app:layout_constraintTop_toBottomOf="@id/et_pw_layout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
