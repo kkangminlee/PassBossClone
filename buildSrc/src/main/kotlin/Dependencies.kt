@@ -15,6 +15,7 @@ object AndroidXDependencies {
     const val lifeCycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleVersion}"
     const val lifeCycleLiveDataKtx =
         "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}"
+    const val security = "androidx.security:security-crypto:${Versions.securityVersion}"
 }
 
 object TestDependencies {
@@ -44,6 +45,12 @@ object ThirdPartyDependencies {
     const val okHttpBom = "com.squareup.okhttp3:okhttp-bom:${Versions.okHttpVersion}"
     const val coil = "io.coil-kt:coil:${Versions.coilVersion}"
     const val coilSvg = "io.coil-kt:coil-svg:${Versions.coilVersion}"
+    const val flipper = "com.facebook.flipper:flipper:${Versions.flipperVersion}"
+    const val soloader = "com.facebook.soloader:soloader:${Versions.soloaderVersion}"
+    const val flipperNetwork =
+        "com.facebook.flipper:flipper-network-plugin:${Versions.flipperVersion}"
+    const val flipperLeakCanary =
+        "com.facebook.flipper:flipper-leakcanary2-plugin:${Versions.flipperVersion}"
 }
 
 object ClassPathPlugins {

@@ -11,12 +11,15 @@ object Versions {
     const val fragmentKtxVersion = "1.4.1"
     const val coroutinesAndroidVersion = "1.6.2"
     const val lifecycleVersion = "2.4.1"
+    const val securityVersion = "1.0.0"
 
     const val gsonVersion = "2.8.6"
     const val retrofitVersion = "2.9.0"
     const val timberVersion = "5.0.1"
     const val okHttpVersion = "4.9.3"
     const val coilVersion = "2.0.0-rc03"
+    const val flipperVersion = "0.153.0"
+    const val soloaderVersion = "0.10.1"
 
     const val gradleVersion = "7.1.1"
 

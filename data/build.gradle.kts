@@ -28,6 +28,8 @@ dependencies {
 
     AndroidXDependencies.run {
         implementation(hilt)
+        implementation(security)
+        implementation(coreKtx)
     }
     KotlinDependencies.run {
         implementation(kotlin)
