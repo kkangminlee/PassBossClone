@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="itemList">
+        <item>지금</item>
+        <item>5분</item>
+        <item>10분</item>
+        <item>15분</item>
+        <item>20분</item>
+        <item>30분</item>
+        <item>40분</item>
+        <item>60분 이상</item>
+    </string-array>
+</resources>

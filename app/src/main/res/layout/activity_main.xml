@@ -1,114 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.main.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="org.passorder.boss.presentation.main.MainViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="10dp"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/iv_check_open"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="15dp"
-            android:src="@drawable/selector_check"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="MOISSON"
-            android:textColor="@color/gray"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ic_alarm"
-            app:layout_constraintStart_toEndOf="@id/iv_check_open"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ic_alarm"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginEnd="15dp"
-            android:src="@drawable/ic_alarm"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ic_setting"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ic_setting"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginEnd="15dp"
-            android:src="@drawable/ic_setting"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cl_time"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        tools:context=".presentation.main.MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_time"
-            android:layout_width="wrap_content"
+            android:id="@+id/cl_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/spinner_time"
+            android:paddingVertical="10dp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tv_time_min"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="최소수령시간"
-                android:textSize="10sp"
+            <ImageView
+                android:id="@+id/iv_check_open"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/selector_check"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="MOISSON"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ic_alarm"
+                app:layout_constraintStart_toEndOf="@id/iv_check_open"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ic_alarm"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/ic_alarm"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ic_setting"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ic_setting"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/ic_setting"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cl_time"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5분"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@id/tv_time_min"
-                app:layout_constraintTop_toBottomOf="@id/tv_time_min" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/spinner_time"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_time_min"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="최소수령시간"
+                    android:textSize="10sp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.minTime}"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="@id/tv_time_min"
+                    app:layout_constraintTop_toBottomOf="@id/tv_time_min" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Spinner
+                android:id="@+id/spinner_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Spinner
-            android:id="@+id/spinner_time"
-            android:layout_width="wrap_content"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_menu"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            app:layout_constraintTop_toBottomOf="@id/cl_title"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/black"
+            app:tabMode="fixed"
+            app:tabTextColor="@color/black" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_menu"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tl_menu" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tl_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cl_title"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@color/black"
-        app:tabMode="fixed"
-        app:tabTextColor="@color/black" />
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vp_menu"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_menu" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

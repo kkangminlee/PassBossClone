@@ -86,5 +86,9 @@ dependencies {
         implementation(timber)
         implementation(coil)
         implementation(coilSvg)
+        implementation(flipper)
+        implementation(flipperNetwork)
+        implementation(flipperLeakCanary)
+        implementation(soloader)
     }
 }
