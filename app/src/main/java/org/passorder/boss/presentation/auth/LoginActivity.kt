@@ -42,15 +42,20 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             .onEach {
                 when (it) {
                     is LoginViewModel.Event.Success -> {
-                        finish()
-                        Intent(this, MainActivity::class.java).apply {
-                            startActivity(this)
-                        }
+                        viewModel.getUser()
                     }
                     is LoginViewModel.Event.Failure -> {
                         toast(it.message)
                     }
                 }
+            }.launchIn(lifecycleScope)
+
+        viewModel.userInfo.flowWithLifecycle(lifecycle)
+            .onEach {
+                Intent(this, MainActivity::class.java).apply {
+                    startActivity(this)
+                }
+                finish()
             }.launchIn(lifecycleScope)
     }
 
