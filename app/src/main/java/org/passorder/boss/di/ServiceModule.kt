@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.passorder.data.service.AuthService
+import org.passorder.data.service.OrderService
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -15,4 +16,9 @@ object ServiceModule {
     @Singleton
     fun provideAuthService(retrofit: Retrofit): AuthService =
         retrofit.create(AuthService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideOrderService(retrofit: Retrofit): OrderService =
+        retrofit.create(OrderService::class.java)
 }
