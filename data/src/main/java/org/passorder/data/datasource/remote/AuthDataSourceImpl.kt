@@ -1,8 +1,10 @@
 package org.passorder.data.datasource.remote
 
+import android.util.Log
 import org.passorder.data.datasource.AuthDataSource
 import org.passorder.data.model.request.RequestLogin
 import org.passorder.data.model.response.ResponseLogin
+import org.passorder.data.model.response.ResponseUser
 import org.passorder.data.service.AuthService
 import javax.inject.Inject
 
@@ -16,5 +18,9 @@ class AuthDataSourceImpl @Inject constructor(
             request.fcmToken,
             request.appAgent
         )
+    }
+
+    override suspend fun getUser(uuid: String): ResponseUser {
+        return service.getUser(uuid)
     }
 }
