@@ -1,4 +1,4 @@
-package org.passorder.ui
+package org.passorder.ui.fragment
 
 import android.view.View
 import android.widget.Toast
