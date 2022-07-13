@@ -1,11 +1,13 @@
 package org.passorder.boss.presentation.main.history.dialog
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import org.passorder.boss.R
 import org.passorder.boss.databinding.DialogPickerBinding
 import java.util.*
 
@@ -36,8 +38,21 @@ class DatePickerDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
         initData()
         initEvent()
+    }
+
+    private fun initView() {
+        val deviceWidth = Resources.getSystem().displayMetrics.widthPixels
+        val dialogHorizontalMargin = (Resources.getSystem().displayMetrics.density * 16) * 2
+        dialog?.window?.apply {
+            setBackgroundDrawableResource(R.drawable.shape_bg_dialog)
+            setLayout(
+                (deviceWidth - dialogHorizontalMargin).toInt(),
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+        }
     }
 
     private fun initData() {
@@ -76,14 +91,6 @@ class DatePickerDialog : DialogFragment() {
 
     private fun yearMontyDate(): String {
         return "${binding.npYear.value}-${String.format("%02d", binding.npMonth.value)}"
-    }
-
-    override fun onResume() {
-        super.onResume()
-        dialog?.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
     }
 
     override fun onDestroyView() {
