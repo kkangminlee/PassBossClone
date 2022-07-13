@@ -51,7 +51,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun initEvent() {
         binding.ivCheckOpen.setOnClickListener {
             viewModel.gateStore(!binding.ivCheckOpen.isSelected)
-            viewModel.setMinTime(5)
+//            viewModel.setMinTime(5)
         }
 
     }

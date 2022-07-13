@@ -3,21 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.17925659472422062" />
+        <entry key="../../Library/Android/sdk/platforms/android-32/data/res/layout/activity_list_item.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/drawable/ic_alarm.xml" value="0.2605" />
         <entry key="app/src/main/res/drawable/ic_check_on.xml" value="0.2605" />
         <entry key="app/src/main/res/drawable/ic_uncheck.xml" value="0.2605" />
         <entry key="app/src/main/res/drawable/selector_check.xml" value="0.299" />
         <entry key="app/src/main/res/drawable/shape_bg_order.xml" value="0.299" />
+        <entry key="app/src/main/res/drawable/shape_bottom_blue.xml" value="0.299" />
+        <entry key="app/src/main/res/drawable/shape_bottom_corner.xml" value="0.299" />
+        <entry key="app/src/main/res/drawable/shape_bottom_indigo.xml" value="0.299" />
+        <entry key="app/src/main/res/drawable/shape_bottom_orange.xml" value="0.299" />
+        <entry key="app/src/main/res/drawable/shape_bottom_yellow.xml" value="0.299" />
         <entry key="app/src/main/res/drawable/shape_corner.xml" value="0.299" />
+        <entry key="app/src/main/res/drawable/shape_corner_ok.xml" value="0.299" />
         <entry key="app/src/main/res/drawable/shape_end_corner.xml" value="0.299" />
         <entry key="app/src/main/res/drawable/shape_start_corner.xml" value="0.299" />
         <entry key="app/src/main/res/drawable/shape_top_corner.xml" value="0.299" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3723309326171876" />
+        <entry key="app/src/main/res/layout/dialog_picker.xml" value="0.32932891845703127" />
         <entry key="app/src/main/res/layout/fragment_empty.xml" value="0.19479166666666667" />
-        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.3871978759765625" />
-        <entry key="app/src/main/res/layout/fragment_order.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/item_history_list.xml" value="0.5023284912109375" />
+        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.38958333333333334" />
+        <entry key="app/src/main/res/layout/fragment_order.xml" value="0.34814453125" />
+        <entry key="app/src/main/res/layout/item_history_list.xml" value="0.25" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2025" />
       </map>
     </option>
