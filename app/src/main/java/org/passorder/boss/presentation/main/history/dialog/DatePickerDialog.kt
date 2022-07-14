@@ -81,16 +81,12 @@ class DatePickerDialog : DialogFragment() {
                 set(Calendar.YEAR, binding.npYear.value)
                 set(Calendar.MONTH, binding.npMonth.value - 1)
             }
-
-            val startDate = "${yearMontyDate()}-${String.format("%02d",cal.getActualMinimum(Calendar.DAY_OF_MONTH))}"
-            val endDate = "${yearMontyDate()}-${String.format("%02d",cal.getActualMaximum(Calendar.DAY_OF_MONTH))}"
+            val yearMonth = "${cal[Calendar.YEAR]}-${String.format("%02d",cal[Calendar.MONTH]+1)}"
+            val startDate = "${yearMonth}-${String.format("%02d",cal.getActualMinimum(Calendar.DAY_OF_MONTH))}"
+            val endDate = "${yearMonth}-${String.format("%02d",cal.getActualMaximum(Calendar.DAY_OF_MONTH))}"
             dataListener?.onClick(startDate,endDate)
             dismiss()
         }
-    }
-
-    private fun yearMontyDate(): String {
-        return "${binding.npYear.value}-${String.format("%02d", binding.npMonth.value)}"
     }
 
     override fun onDestroyView() {
