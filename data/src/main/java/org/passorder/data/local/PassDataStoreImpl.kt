@@ -43,6 +43,11 @@ class PassDataStoreImpl @Inject constructor(
         set(value) {
             storeDelegate.edit { putString("STORE_UUID", value) }
         }
+    override var minTime: Int
+        get() = storeDelegate.getInt("MIN_TIME", 0)
+        set(value) {
+            storeDelegate.edit { putInt("MIN_TIME", value)}
+        }
 
     override fun clear() {
         storeDelegate.edit { clear() }
