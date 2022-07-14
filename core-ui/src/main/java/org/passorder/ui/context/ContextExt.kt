@@ -26,3 +26,6 @@ fun Context.stringOf(@StringRes resId: Int) = getString(resId)
 fun Context.colorOf(@ColorRes resId: Int) = ContextCompat.getColor(this, resId)
 
 fun Context.drawableOf(@DrawableRes resId: Int) = ContextCompat.getDrawable(this, resId)
+
+fun Context.stringListFrom(id: Int): List<String> =
+    resources.getStringArray(id).toList()
