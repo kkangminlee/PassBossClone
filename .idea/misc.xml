@@ -23,7 +23,7 @@
         <entry key="app/src/main/res/drawable/shape_start_corner.xml" value="0.299" />
         <entry key="app/src/main/res/drawable/shape_top_corner.xml" value="0.299" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.19479166666666667" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.5875190258751902" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.45052631578947366" />
         <entry key="app/src/main/res/layout/dialog_picker.xml" value="0.32932891845703127" />
         <entry key="app/src/main/res/layout/fragment_empty.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_history.xml" value="0.38958333333333334" />
