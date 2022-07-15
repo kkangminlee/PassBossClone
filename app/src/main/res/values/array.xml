@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="itemList">
+    <string-array name="spinner_List">
         <item>지금</item>
         <item>5분</item>
         <item>10분</item>
@@ -9,5 +9,14 @@
         <item>30분</item>
         <item>40분</item>
         <item>60분 이상</item>
+    </string-array>
+
+    <string-array name="tab_list">
+        <item>주문</item>
+        <item>지난주문</item>
+        <item>메뉴</item>
+        <item>분석</item>
+        <item>스토리</item>
+        <item>적립내역</item>
     </string-array>
 </resources>

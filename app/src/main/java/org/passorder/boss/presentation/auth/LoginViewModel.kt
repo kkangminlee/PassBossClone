@@ -52,7 +52,6 @@ class LoginViewModel @Inject constructor(
                 dataStore.storeUUID = it.storeIdentifier
                 _userInfo.value = it
             }, {
-                Log.d("kangmi", "실패")
             })
         }
     }
