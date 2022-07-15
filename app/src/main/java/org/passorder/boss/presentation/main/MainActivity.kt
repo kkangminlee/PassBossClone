@@ -13,9 +13,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.passorder.boss.R
 import org.passorder.boss.databinding.ActivityMainBinding
-import org.passorder.boss.presentation.main.history.HistoryFragment
-import org.passorder.boss.presentation.main.order.OrderFragment
-import org.passorder.boss.presentation.main.other.MenuFragment
 import org.passorder.domain.PassDataStore
 import org.passorder.ui.base.BindingActivity
 import org.passorder.ui.context.stringListFrom
@@ -39,16 +36,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         binding.spinnerTime.apply {
             adapter = ArrayAdapter.createFromResource(this@MainActivity, R.array.spinner_List, android.R.layout.simple_spinner_dropdown_item)
             setSelection(dataStore.minTime)
-            binding.vpMenu.adapter = MainViewPagerAdapter(this@MainActivity).apply {
-                fragmentList = listOf(
-                    OrderFragment(),
-                    HistoryFragment(),
-                    MenuFragment(),
-                    MenuFragment(),
-                    MenuFragment(),
-                    MenuFragment()
-                )
-            }
+
+            binding.vpMenu.adapter = MainViewPagerAdapter(supportFragmentManager.fragmentFactory, this@MainActivity)
 
             TabLayoutMediator(binding.tlMenu, binding.vpMenu) { tab, position ->
                 tab.text = stringListFrom(R.array.tab_list)[position]
