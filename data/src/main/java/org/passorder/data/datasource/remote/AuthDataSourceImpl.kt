@@ -1,6 +1,5 @@
 package org.passorder.data.datasource.remote
 
-import android.util.Log
 import org.passorder.data.datasource.AuthDataSource
 import org.passorder.data.model.request.RequestLogin
 import org.passorder.data.model.response.ResponseLogin

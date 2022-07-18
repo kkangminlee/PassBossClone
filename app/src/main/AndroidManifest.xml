@@ -30,6 +30,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".presentation.notice.NoticeActivity"
+            android:exported="false" />
+
         <activity android:name="com.facebook.flipper.android.diagnostics.FlipperDiagnosticActivity"
             android:exported="true"/>
     </application>

@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="data"
+            type="org.passorder.domain.entity.Order" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="금액"
+            tools:text="금액"
             android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,13 +79,13 @@
             android:background="@drawable/shape_top_corner"
             android:gravity="center"
             android:paddingVertical="30dp"
-            android:text="5번"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/tv_status"
             app:layout_constraintStart_toStartOf="@id/tv_status"
-            app:layout_constraintTop_toTopOf="@id/tv_order_date" />
+            app:layout_constraintTop_toTopOf="@id/tv_order_date"
+            tools:text="5번" />
 
         <TextView
             android:id="@+id/tv_status"

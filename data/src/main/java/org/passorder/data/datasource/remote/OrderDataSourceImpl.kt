@@ -28,9 +28,7 @@ class OrderDataSourceImpl @Inject constructor(
     }
 
     override suspend fun orderList(request: RequestOrder): List<ResponseOrder> {
-        return service.orderList(request.page, request.limit, request.filter, request.start, request.end).map {
-            it.translate()
-        }
+        return service.orderList(request.page, request.limit, request.filter, request.start, request.end)
     }
 
     override suspend fun totalMoney(request: RequestCount): List<ResponseMoney> {
