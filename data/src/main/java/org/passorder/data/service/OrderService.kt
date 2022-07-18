@@ -1,14 +1,15 @@
 package org.passorder.data.service
 
-import org.passorder.data.model.response.ResponseCount
-import org.passorder.data.model.response.ResponseMoney
-import org.passorder.data.model.response.ResponseOrder
-import org.passorder.data.model.response.ResponseStatus
-import retrofit2.Call
+import org.passorder.data.model.response.*
 import retrofit2.http.*
 
 
 interface OrderService {
+    @GET("stores/{store_uid}")
+    suspend fun getStore(
+        @Path("store_uid") storeId: String
+    ): ResponseStore
+
     @FormUrlEncoded
     @PUT("stores/{store_uid}")
     suspend fun gateStore(
