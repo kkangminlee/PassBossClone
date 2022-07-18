@@ -9,6 +9,10 @@ import javax.inject.Inject
 class OrderRepositoryImpl @Inject constructor(
     private val dataSource: OrderDataSource,
 ) : OrderRepository {
+    override suspend fun getStore(): Store {
+        return dataSource.getStore().toStore()
+    }
+
     override suspend fun gateStore(isOpen: Boolean) {
         dataSource.gateStore(isOpen)
     }
