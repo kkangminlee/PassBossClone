@@ -17,6 +17,10 @@ object AndroidXDependencies {
         "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}"
     const val security = "androidx.security:security-crypto:${Versions.securityVersion}"
     const val pagingRuntime = "androidx.paging:paging-runtime:${Versions.pagingVersion}"
+    const val navigationFragmentKtx =
+        "androidx.navigation:navigation-fragment-ktx:${Versions.naviVersion}"
+    const val navigationUiKtx =
+        "androidx.navigation:navigation-ui-ktx:${Versions.naviVersion}"
 }
 
 object TestDependencies {
