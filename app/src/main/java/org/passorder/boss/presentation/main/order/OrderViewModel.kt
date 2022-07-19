@@ -26,7 +26,7 @@ class OrderViewModel @Inject constructor(
     fun orderList(request: SetOrder) {
         viewModelScope.launch {
             runCatching {
-                repository.orderList(request)
+                repository.getOrderList(request)
             }.onSuccess {
                 _currentOrder.value = it
             }
