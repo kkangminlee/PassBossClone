@@ -10,7 +10,7 @@ data class SetOrder(
 
 data class Order(
     val requests: String,
-    val nickName: String,
+    val nickName: String?,
     val price: Int,
     val phone: String,
     val createdDate: String,
