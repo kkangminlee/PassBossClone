@@ -1,12 +1,11 @@
-package org.passorder.boss.presentation.main.order
+package org.passorder.boss.presentation.main.history
 
-import android.annotation.SuppressLint
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.passorder.boss.databinding.ItemHistoryListBinding
 import org.passorder.boss.databinding.ItemMenuListBinding
@@ -14,23 +13,23 @@ import org.passorder.boss.util.OrderStatus
 import org.passorder.boss.util.TakeOut
 import org.passorder.domain.entity.Order
 
-class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
-    ListAdapter<Order, OrderListAdapter.OrderListViewHolder>(DIFF_UTIL) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderListViewHolder {
+// 지난 주문 내역 페이징 어뎁터
+class HistoryPagingAdapter(private val itemClick: (Order) -> (Unit)) :
+    PagingDataAdapter<Order, HistoryPagingAdapter.HistoryViewHolder>(DIFF_UTIL) {
+    override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
+        getItem(position)?.let { holder.onBind(it) }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val binding =
             ItemHistoryListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return OrderListViewHolder(binding, itemClick)
+        return HistoryViewHolder(binding, itemClick)
     }
 
-    override fun onBindViewHolder(holder: OrderListViewHolder, position: Int) {
-        holder.onBind(getItem(position))
-    }
-
-    class OrderListViewHolder(
+    class HistoryViewHolder(
         private val binding: ItemHistoryListBinding,
         private val itemClick: (Order) -> (Unit)
     ) : RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("SetTextI18n")
         fun onBind(item: Order) {
             val inflater = LayoutInflater.from(binding.root.context)
             with(binding) {
@@ -49,31 +48,16 @@ class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
                     }
                 }
 
-//                                when(item.tableNumber) {
-//                    TakeOut.TAKEOUT.takeNo -> {
-//
-//                    }
-//
-//                    TakeOut.DINE.takeNo -> {
-//
-//                    }
-//
-//                    TakeOut.UNKNOWN.takeNo -> {
-//
-//                    }
-//
-//                    else -> {}
-//                }
-
                 tvStatus.setOnClickListener {
                     itemClick(item)
                 }
 
-                menuContainer.run{
+                // 주문 메뉴 LinearLayout 동적 추가
+                menuContainer.run {
                     val createMenuBinding = { ItemMenuListBinding.inflate(inflater) }
 
-                    fun addMenuItems(){
-                        item.menus.map {  menu ->
+                    fun addMenuItems() {
+                        item.menus.map { menu ->
                             createMenuBinding().apply {
                                 tvCoffee.text = menu.name
                                 tvPrice.text = "${menu.price}원"
@@ -81,7 +65,7 @@ class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
 
                                 menu.options.map { option ->
                                     TextView(binding.root.context).apply {
-                                        setTextSize(TypedValue.COMPLEX_UNIT_SP,16f)
+                                        setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
                                         text = option.name
                                     }
                                 }.forEach {
@@ -92,8 +76,9 @@ class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
                             addView(it.root)
                         }
                     }
-                    fun addUsedCouponItems(){
-                        item.usedCoupons.map {  coupon ->
+
+                    fun addUsedCouponItems() {
+                        item.usedCoupons.map { coupon ->
                             createMenuBinding().apply {
                                 tvCoffee.text = coupon.couponName
                                 tvPrice.text = "-${coupon.benefit}원"
@@ -104,7 +89,6 @@ class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
                             addView(it.root)
                         }
                     }
-
                     removeAllViews()
                     addMenuItems()
                     addUsedCouponItems()
@@ -119,7 +103,7 @@ class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
                 oldItem: Order,
                 newItem: Order
             ): Boolean {
-                return oldItem.createdDate == newItem.createdDate
+                return oldItem.identifier == newItem.identifier
             }
 
             override fun areContentsTheSame(
