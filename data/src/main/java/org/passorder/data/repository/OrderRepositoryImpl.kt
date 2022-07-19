@@ -14,7 +14,7 @@ class OrderRepositoryImpl @Inject constructor(
     }
 
     override suspend fun gateStore(isOpen: Boolean) {
-        dataSource.gateStore(isOpen)
+        dataSource.putGateStore(isOpen)
     }
 
     override suspend fun setMinTimeStore(time: Int) {
@@ -25,20 +25,20 @@ class OrderRepositoryImpl @Inject constructor(
         return dataSource.putOrderStatus(uuid).toStatus()
     }
 
-    override suspend fun totalMoney(request: SetCount): List<Money> {
-        return dataSource.totalMoney(request.toRequest()).map {
+    override suspend fun getTotalMoney(request: SetCount): List<Money> {
+        return dataSource.getTotalMoney(request.toRequest()).map {
             it.toMoney()
         }
     }
 
-    override suspend fun orderList(request: SetOrder): List<Order> {
-        return dataSource.orderList(request.toRequest()).map {
+    override suspend fun getOrderList(request: SetOrder): List<Order> {
+        return dataSource.getOrderList(request.toRequest()).map {
             it.toOrder()
         }
     }
 
-    override suspend fun orderCount(request: SetCount): List<Count> {
-        return dataSource.orderCount(request.toRequest()).map {
+    override suspend fun getOrderCount(request: SetCount): List<Count> {
+        return dataSource.getOrderCount(request.toRequest()).map {
             it.toCount()
         }
     }
