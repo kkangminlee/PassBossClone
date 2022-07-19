@@ -1,5 +1,6 @@
 package org.passorder.boss.presentation.main.order
 
+import android.annotation.SuppressLint
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -29,26 +30,40 @@ class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
         private val binding: ItemHistoryListBinding,
         private val itemClick: (Order) -> (Unit)
     ) : RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun onBind(item: Order) {
             val inflater = LayoutInflater.from(binding.root.context)
             with(binding) {
-                tvTime.text = item.requests
-                tvPhone.text = item.phone
-                tvMoney.text = "금액 : ${item.price}원"
-                tvOrderNo.text = "${item.number}번"
-                tvCard.text = item.payStatus
+                binding.data = item
 
                 TakeOut.values().forEach {
                     if (item.tableNumber == it.takeNo) {
                         tvId.text = "${item.nickName} / ${it.takeStatue}"
                     }
                 }
+
                 OrderStatus.values().forEach {
                     if (item.status == it.status) {
                         tvStatus.setBackgroundResource(it.background)
                         tvStatus.text = it.orderText
                     }
                 }
+
+//                                when(item.tableNumber) {
+//                    TakeOut.TAKEOUT.takeNo -> {
+//
+//                    }
+//
+//                    TakeOut.DINE.takeNo -> {
+//
+//                    }
+//
+//                    TakeOut.UNKNOWN.takeNo -> {
+//
+//                    }
+//
+//                    else -> {}
+//                }
 
                 tvStatus.setOnClickListener {
                     itemClick(item)

@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
+import org.passorder.domain.entity.Store
 import org.passorder.domain.repository.OrderRepository
 import javax.inject.Inject
 
@@ -15,6 +17,25 @@ class MainViewModel @Inject constructor(
 ): ViewModel() {
     private val _isOpenState = MutableStateFlow(false)
     val isOpenState = _isOpenState.asStateFlow()
+
+    private val _storeInfo = MutableStateFlow<Store?>(null)
+    val storeInfo = _storeInfo.asStateFlow().filterNotNull()
+
+    init {
+        getStore()
+    }
+
+    private fun getStore() {
+        viewModelScope.launch {
+            runCatching {
+                repository.getStore()
+            }.onSuccess {
+                _storeInfo.value = it
+            }.onFailure {
+
+            }
+        }
+    }
 
     fun gateStore(isOpen: Boolean) {
         viewModelScope.launch {

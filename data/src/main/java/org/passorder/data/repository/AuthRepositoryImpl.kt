@@ -1,6 +1,5 @@
 package org.passorder.data.repository
 
-import android.util.Log
 import org.passorder.data.datasource.AuthDataSource
 import org.passorder.data.model.request.toRequestLogin
 import org.passorder.domain.entity.LoginToken

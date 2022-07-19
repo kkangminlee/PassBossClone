@@ -1,6 +1,5 @@
 package org.passorder.boss.presentation.auth
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +18,7 @@ class LoginViewModel @Inject constructor(
     private val dataStore: PassDataStore
 ) : ViewModel() {
     private val _loginInfo = MutableSharedFlow<Event>()
-    val loginInfo: SharedFlow<Event> = _loginInfo.asSharedFlow()
+    val loginInfo = _loginInfo.asSharedFlow()
 
     private val _userInfo = MutableStateFlow<User?>(null)
     val userInfo = _userInfo.asStateFlow().filterNotNull()

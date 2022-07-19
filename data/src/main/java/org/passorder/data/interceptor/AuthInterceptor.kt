@@ -14,7 +14,6 @@ class AuthInterceptor @Inject constructor(
             .addHeader("Authorization", "Bearer ${dataStore.accessToken}")
             .build()
 
-        val response = chain.proceed(authRequest)
-        return response
+        return chain.proceed(authRequest)
     }
 }

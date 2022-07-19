@@ -26,15 +26,12 @@ class HistoryViewModel @Inject constructor(
     private val _orderCount = MutableStateFlow(0)
     val orderCount = _orderCount.asStateFlow()
 
-
-
     fun orderList(request: SetOrder) {
         viewModelScope.launch {
             runCatching {
                 repository.orderList(request)
             }.onSuccess {
                 _currentOrder.value = it
-                //todo 리스트 동적으로 추가
             }.onFailure {
                 Log.e("ERROR", it.toString())
             }

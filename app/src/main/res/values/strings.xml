@@ -6,4 +6,6 @@
     <string name="pw">비밀번호</string>
     <string name="login">로그인</string>
     <string name="version">v2.12.15(staging)</string>
+    <string name="notice_store">앱 내 점주님의 매장이 영업 종료로 표시되고 있어요.\n지금 영업시간이라면 점주용 프로그램을 실행해주세요. \n그럼 패써님들께 매장이 운영중이라는 알림이 전송 되어요!</string>
+    <string name="notice_menu">해당메뉴는 현재 패스오더 앱 내 품절 처리되어있어요. \n메뉴 준비가 완료된 후 [메뉴 카테고리 > 품절 메뉴 > 판매중 체크\ 해주세요! \n그럼 해당 메뉴를 주문을 원하는 패써님들께 구매 가능 알림이 전송되어요.</string>
 </resources>
