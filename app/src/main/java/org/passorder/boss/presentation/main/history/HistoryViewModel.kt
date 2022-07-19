@@ -1,47 +1,49 @@
 package org.passorder.boss.presentation.main.history
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
+import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.passorder.domain.entity.Order
+import org.passorder.data.datasource.OrderPagingSource
+import org.passorder.data.model.request.RequestOrder
+import org.passorder.data.service.OrderService
 import org.passorder.domain.entity.SetCount
-import org.passorder.domain.entity.SetOrder
 import org.passorder.domain.repository.OrderRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val repository: OrderRepository
+    private val repository: OrderRepository,
+    private val service: OrderService
 ) : ViewModel() {
-    private val _currentOrder = MutableStateFlow<List<Order>>(listOf())
-    val currentOrder = _currentOrder.asStateFlow()
-
     private val _money = MutableStateFlow(0)
     val money = _money.asStateFlow()
 
     private val _orderCount = MutableStateFlow(0)
     val orderCount = _orderCount.asStateFlow()
 
-    fun orderList(request: SetOrder) {
-        viewModelScope.launch {
-            runCatching {
-                repository.orderList(request)
-            }.onSuccess {
-                _currentOrder.value = it
-            }.onFailure {
-                Log.e("ERROR", it.toString())
-            }
+    // 지난 주문 내역 리스트 서버 통신 페이징으로 가져오기
+    fun orderList(request: RequestOrder) = Pager(
+        config = PagingConfig(10),
+        pagingSourceFactory = { OrderPagingSource(service, request)}
+    ).flow.map {  pagingData ->
+        pagingData.map {
+            it.toOrder()
         }
-    }
+    }.cachedIn(viewModelScope)
 
+    // 총 판매량 서버 통신으로 가져오기
     fun getOrderCount(request: SetCount) {
         viewModelScope.launch {
             runCatching {
-                repository.orderCount(request)
+                repository.getOrderCount(request)
             }.onSuccess {
                 var count = 0
                 it.map { response ->
@@ -52,10 +54,11 @@ class HistoryViewModel @Inject constructor(
         }
     }
 
+    // 총 매출 값 서버 통신으로 가져오기
     fun getTotalMoney(request: SetCount) {
         viewModelScope.launch {
             runCatching {
-                repository.totalMoney(request)
+                repository.getTotalMoney(request)
             }.onSuccess {
                 var money = 0
                 it.map { response ->
