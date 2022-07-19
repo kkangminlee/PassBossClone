@@ -12,7 +12,7 @@ interface OrderService {
 
     @FormUrlEncoded
     @PUT("stores/{store_uid}")
-    suspend fun gateStore(
+    suspend fun putGateStore(
         @Path("store_uid") storeId: String,
         @Field("is_open") isOpen: Boolean
     )
@@ -25,7 +25,7 @@ interface OrderService {
     )
 
     @GET("orders")
-    suspend fun orderList(
+    suspend fun getOrderList(
         @Query("page") page: Int,
         @Query("limit") limit: Int,
         @Query("filter") filter: Int,

@@ -16,8 +16,8 @@ class OrderDataSourceImpl @Inject constructor(
         return service.getStore(dataStore.storeUUID)
     }
 
-    override suspend fun gateStore(isOpen: Boolean) {
-        service.gateStore(dataStore.storeUUID, isOpen)
+    override suspend fun putGateStore(isOpen: Boolean) {
+        service.putGateStore(dataStore.storeUUID, isOpen)
     }
 
     override suspend fun setMinTimeStore(time: Int) {
@@ -28,8 +28,8 @@ class OrderDataSourceImpl @Inject constructor(
         return service.putOrderStatus(uuid)
     }
 
-    override suspend fun orderList(request: RequestOrder): List<ResponseOrder> {
-        return service.orderList(request.page, request.limit, request.filter, request.start, request.end)
+    override suspend fun getOrderList(request: RequestOrder): List<ResponseOrder> {
+        return service.getOrderList(request.page, request.limit, request.filter, request.start, request.end)
     }
 
     override suspend fun totalMoney(request: RequestCount): List<ResponseMoney> {
