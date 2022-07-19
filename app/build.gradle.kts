@@ -62,6 +62,7 @@ dependencies {
         implementation(lifeCycleKtx)
         implementation(lifeCycleLiveDataKtx)
         implementation(hilt)
+        implementation(pagingRuntime)
     }
 
     KaptDependencies.run {

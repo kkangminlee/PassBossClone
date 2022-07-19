@@ -16,6 +16,7 @@ object AndroidXDependencies {
     const val lifeCycleLiveDataKtx =
         "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}"
     const val security = "androidx.security:security-crypto:${Versions.securityVersion}"
+    const val pagingRuntime = "androidx.paging:paging-runtime:${Versions.pagingVersion}"
 }
 
 object TestDependencies {
