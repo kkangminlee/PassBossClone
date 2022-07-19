@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_notice">
+    <fragment
+        android:id="@+id/notice_menu_fragment"
+        android:name="org.passorder.boss.presentation.notice.menu.NoticeMenuFragment"
+        android:label="menu"
+        tools:layout="@layout/fragment_notice_menu" />
+
+    <fragment
+        android:id="@+id/notice_store_fragment"
+        android:name="org.passorder.boss.presentation.notice.store.NoticeStoreFragment"
+        android:label="store"
+        tools:layout="@layout/fragment_notice_store" />
+</navigation>
