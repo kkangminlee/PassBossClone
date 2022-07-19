@@ -2,24 +2,23 @@ package org.passorder.boss.presentation.main.history
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import org.passorder.boss.R
 import org.passorder.boss.databinding.FragmentHistoryBinding
 import org.passorder.boss.presentation.main.history.dialog.DatePickerDialog
-import org.passorder.boss.presentation.main.order.OrderListAdapter
+import org.passorder.data.model.request.RequestOrder
 import org.passorder.domain.PassDataStore
 import org.passorder.domain.entity.SetCount
-import org.passorder.domain.entity.SetOrder
 import org.passorder.ui.base.BindingFragment
 import java.util.*
 import javax.inject.Inject
@@ -29,7 +28,7 @@ import javax.inject.Inject
 class HistoryFragment: BindingFragment<FragmentHistoryBinding>(R.layout.fragment_history) {
     @Inject
     lateinit var dataStore: PassDataStore
-    private var adapter: OrderListAdapter? = null
+    private var adapter: HistoryPagingAdapter? = null
     private val viewModel by viewModels<HistoryViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,8 +39,7 @@ class HistoryFragment: BindingFragment<FragmentHistoryBinding>(R.layout.fragment
     }
 
     private fun initView() {
-        adapter = OrderListAdapter{
-
+        adapter = HistoryPagingAdapter {
         }
         binding.rvLastOrder.adapter = adapter
         val decoration = DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL)
@@ -51,6 +49,7 @@ class HistoryFragment: BindingFragment<FragmentHistoryBinding>(R.layout.fragment
     }
 
     private fun initEvent() {
+        // 날짜 선택 다이어로그 보여주는 리스너, 종료하면 기간 값 String 으로 받음
         binding.clDate.setOnClickListener {
             val dialog = DatePickerDialog()
             dialog.onDateListener { start, end ->
@@ -61,33 +60,36 @@ class HistoryFragment: BindingFragment<FragmentHistoryBinding>(R.layout.fragment
     }
 
     private fun observe() {
-        viewModel.currentOrder.flowWithLifecycle(lifecycle)
-            .onEach {
-                binding.clEmpty.isVisible = it.isEmpty()
-                binding.rvLastOrder.isVisible = it.isNotEmpty()
-                adapter?.submitList(it)
-            }.launchIn(lifecycleScope)
-
+        // 서버 통신 후 받은 총 판매량
         viewModel.orderCount.flowWithLifecycle(lifecycle)
             .onEach {
                 binding.tvOrderCount.text = "${it}개"
             }.launchIn(lifecycleScope)
 
+        // 서버 통신 후 받은 총 매출액
         viewModel.money.flowWithLifecycle(lifecycle)
             .onEach {
                 binding.tvMoney.text = "${it}원"
             }.launchIn(lifecycleScope)
     }
 
+    // 다이얼로그에서 월 선택 후 해당 값으로 판매량, 총 매출, 주문 내역(페이징) 서버 통신
     private fun setPeriod(start: String, end: String) {
         val includeDump = gsonToJson(listOf(dataStore.storeUUID))
         val orderCount = gsonToJson(listOf(false,false,false,false,false,false,false,false))
         val totalMoney = gsonToJson(listOf(false,false,false,false,false,false,false,true))
         binding.tvStartDetail.text = start
         binding.tvEndDetail.text = end
-        viewModel.orderList(SetOrder(1,10,1,start,end))
         viewModel.getOrderCount(SetCount(start,end,includeDump, orderCount))
         viewModel.getTotalMoney(SetCount(start,end,includeDump,totalMoney))
+
+        // orderList 함수에서 받은 PagingData 값을 PagingAdapter 에 넣음
+        lifecycleScope.launch {
+            viewModel.orderList(RequestOrder(1,10,1,start,end)).flowWithLifecycle(lifecycle)
+                .collectLatest {
+                    adapter?.submitData(it)
+                }
+        }
     }
 
     override fun onResume() {
