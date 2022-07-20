@@ -60,7 +60,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         // 매장 열고 닫기 서버 통신 이벤트
         binding.ivCheckOpen.setOnClickListener {
             viewModel.gateStore(!binding.ivCheckOpen.isSelected)
-            Log.d("kangmi", (!binding.ivCheckOpen.isSelected).toString())
         }
 
         // 공지사항 뷰로 이동하는 이벤트

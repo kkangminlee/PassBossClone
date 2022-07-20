@@ -23,12 +23,19 @@
             android:id="@+id/tl_notice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorFullWidth="false"
             app:layout_constraintTop_toBottomOf="@id/tb_notice"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/black"
+            app:tabIndicatorFullWidth="false"
+            app:tabMaxWidth="0dp"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/shape_drop_shadow"
+            app:layout_constraintTop_toBottomOf="@id/tl_notice" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/notice_container"

@@ -19,6 +19,7 @@
         <entry key="app/src/main/res/drawable/shape_bottom_orange.xml" value="0.299" />
         <entry key="app/src/main/res/drawable/shape_bottom_yellow.xml" value="0.299" />
         <entry key="app/src/main/res/drawable/shape_corner.xml" value="0.299" />
+        <entry key="app/src/main/res/drawable/shape_corner_green.xml" value="0.2765" />
         <entry key="app/src/main/res/drawable/shape_corner_ok.xml" value="0.299" />
         <entry key="app/src/main/res/drawable/shape_drop_shadow.xml" value="0.2025" />
         <entry key="app/src/main/res/drawable/shape_end_corner.xml" value="0.299" />
@@ -37,6 +38,7 @@
         <entry key="app/src/main/res/layout/fragment_sold_out.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/item_history_list.xml" value="0.5494666689918155" />
         <entry key="app/src/main/res/layout/item_menu_list.xml" value="0.33089752197265626" />
+        <entry key="app/src/main/res/layout/item_notice_common.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/item_notice_menu.xml" value="0.375" />
         <entry key="app/src/main/res/layout/item_notice_store.xml" value="0.40451385498046877" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2025" />

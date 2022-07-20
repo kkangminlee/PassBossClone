@@ -5,12 +5,14 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.tabs.TabLayout
+import dagger.hilt.android.AndroidEntryPoint
 import org.passorder.boss.R
 import org.passorder.boss.databinding.ActivityNoticeBinding
-import org.passorder.boss.presentation.notice.store.NoticeStoreFragment
 import org.passorder.boss.presentation.notice.menu.NoticeMenuFragment
+import org.passorder.boss.presentation.notice.store.NoticeStoreFragment
 import org.passorder.ui.base.BindingActivity
 
+@AndroidEntryPoint
 class NoticeActivity : BindingActivity<ActivityNoticeBinding>(R.layout.activity_notice) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +26,6 @@ class NoticeActivity : BindingActivity<ActivityNoticeBinding>(R.layout.activity_
             addTab(newTab().setText("메뉴 품절"))
             addTab(newTab().setText("매장 미오픈"))
         }
-
-
 
         binding.tbNotice.apply {
             title = "소식"

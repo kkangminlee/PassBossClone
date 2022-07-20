@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.passorder.data.datasource.OrderPagingSource
+import org.passorder.data.datasource.remote.OrderPagingSource
 import org.passorder.data.model.request.RequestOrder
 import org.passorder.data.service.OrderService
 import org.passorder.domain.entity.SetCount
@@ -32,7 +32,7 @@ class HistoryViewModel @Inject constructor(
     // 지난 주문 내역 리스트 서버 통신 페이징으로 가져오기
     fun orderList(request: RequestOrder) = Pager(
         config = PagingConfig(10),
-        pagingSourceFactory = { OrderPagingSource(service, request)}
+        pagingSourceFactory = { OrderPagingSource(service, request) }
     ).flow.map {  pagingData ->
         pagingData.map {
             it.toOrder()
