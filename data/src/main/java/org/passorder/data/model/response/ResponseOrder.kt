@@ -6,7 +6,7 @@ import org.passorder.domain.entity.*
 data class ResponseOrder(
     val requests: String,
     @SerializedName("user_nickname")
-    val nickName: String,
+    val nickName: String?,
     val price: Int,
     val phone: String,
     @SerializedName("created_date")

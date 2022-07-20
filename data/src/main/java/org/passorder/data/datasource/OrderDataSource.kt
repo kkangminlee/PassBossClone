@@ -10,6 +10,6 @@ interface OrderDataSource {
     suspend fun setMinTimeStore(time: Int)
     suspend fun putOrderStatus(uuid: String): ResponseStatus
     suspend fun getOrderList(request: RequestOrder): List<ResponseOrder>
-    suspend fun orderCount(request: RequestCount): List<ResponseCount>
-    suspend fun totalMoney(request: RequestCount): List<ResponseMoney>
+    suspend fun getOrderCount(request: RequestCount): List<ResponseCount>
+    suspend fun getTotalMoney(request: RequestCount): List<ResponseMoney>
 }

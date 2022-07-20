@@ -12,6 +12,8 @@ object Versions {
     const val coroutinesAndroidVersion = "1.6.2"
     const val lifecycleVersion = "2.4.1"
     const val securityVersion = "1.0.0"
+    const val pagingVersion = "3.1.1"
+    const val naviVersion = "2.5.0"
 
     const val gsonVersion = "2.8.6"
     const val retrofitVersion = "2.9.0"

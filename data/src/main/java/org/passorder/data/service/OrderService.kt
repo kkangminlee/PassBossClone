@@ -1,5 +1,7 @@
 package org.passorder.data.service
 
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
 import org.passorder.data.model.response.*
 import retrofit2.http.*
 
@@ -27,7 +29,7 @@ interface OrderService {
     @GET("orders")
     suspend fun getOrderList(
         @Query("page") page: Int,
-        @Query("limit") limit: Int,
+        @Query("limit") limit: Int? = 10,
         @Query("filter") filter: Int,
         @Query("start_date") start: String?,
         @Query("end_date") end: String?

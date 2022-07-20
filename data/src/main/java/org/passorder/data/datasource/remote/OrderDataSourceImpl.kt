@@ -32,11 +32,11 @@ class OrderDataSourceImpl @Inject constructor(
         return service.getOrderList(request.page, request.limit, request.filter, request.start, request.end)
     }
 
-    override suspend fun totalMoney(request: RequestCount): List<ResponseMoney> {
+    override suspend fun getTotalMoney(request: RequestCount): List<ResponseMoney> {
         return service.getTotalMoney(request.start, request.end, request.includeDump, request.conditionDump)
     }
 
-    override suspend fun orderCount(request: RequestCount): List<ResponseCount> {
+    override suspend fun getOrderCount(request: RequestCount): List<ResponseCount> {
         return service.getOrderCount(request.start,request.end,request.includeDump,request.conditionDump)
     }
 }
