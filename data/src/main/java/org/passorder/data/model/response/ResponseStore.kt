@@ -6,7 +6,9 @@ import org.passorder.domain.entity.Store
 data class ResponseStore(
     val name: String,
     @SerializedName("minimum_pickup_time")
-    val minimumPickupTime: Int
+    val minimumPickupTime: Int,
+    @SerializedName("is_open")
+    val isOpen: Boolean
 ) {
-    fun toStore() = Store(name, minimumPickupTime)
+    fun toStore() = Store(name, minimumPickupTime, isOpen)
 }
