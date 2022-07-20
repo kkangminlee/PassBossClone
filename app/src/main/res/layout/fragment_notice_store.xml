@@ -23,9 +23,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_open"
             android:layout_width="match_parent"
-            android:layout_marginTop="12dp"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_notice_store"
-            android:layout_marginHorizontal="12dp" />
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="12dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_notice_common" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
