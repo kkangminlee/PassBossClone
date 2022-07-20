@@ -3,7 +3,6 @@ package org.passorder.boss.util
 import android.annotation.SuppressLint
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import org.passorder.boss.R
 import java.text.SimpleDateFormat
 import java.util.*
 
