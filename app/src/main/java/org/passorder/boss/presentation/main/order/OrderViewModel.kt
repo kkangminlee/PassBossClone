@@ -1,26 +1,27 @@
 package org.passorder.boss.presentation.main.order
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.passorder.domain.entity.NewStatus
 import org.passorder.domain.entity.Order
 import org.passorder.domain.entity.SetOrder
-import org.passorder.domain.entity.Status
 import org.passorder.domain.repository.OrderRepository
+import org.passorder.ui.base.BaseViewModel
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
 class OrderViewModel @Inject constructor(
     private val repository: OrderRepository
-) : ViewModel() {
+) : BaseViewModel() {
     private val _currentOrder = MutableStateFlow<List<Order>>(listOf())
     val currentOrder = _currentOrder.asStateFlow()
 
-    private val _orderStatus = MutableStateFlow<Status?>(null)
+    private val _orderStatus = MutableStateFlow<NewStatus?>(null)
     val orderStatus = _orderStatus.asStateFlow().filterNotNull()
 
     fun orderList(request: SetOrder) {
@@ -29,16 +30,26 @@ class OrderViewModel @Inject constructor(
                 repository.getOrderList(request)
             }.onSuccess {
                 _currentOrder.value = it
+            }.onFailure {
+                if (it is HttpException) {
+                    _errorMsg.emit("서버 통신 에러 error code: ${it.code()}")
+                }
             }
         }
     }
 
-    fun putOrderStatus(uuid: String) {
+    // 주문 상태 변경하는 서버 통신 로직
+    fun putOrderStatus(uuid: String, pos: Int) {
         viewModelScope.launch {
             runCatching {
                 repository.putOrderStatus(uuid)
             }.onSuccess {
-                _orderStatus.value = it
+                val a = NewStatus(it.status, pos)
+                _orderStatus.value = a
+            }.onFailure {
+                if (it is HttpException) {
+                    _errorMsg.emit("서버 통신 에러 error code: ${it.code()}")
+                }
             }
         }
     }
