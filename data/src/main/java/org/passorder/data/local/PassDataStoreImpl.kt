@@ -26,8 +26,8 @@ class PassDataStoreImpl @Inject constructor(
     }
 
     override var accessToken: String
-        set(value) = storeDelegate.edit { putString("USER_TOKEN", value) }
-        get() = storeDelegate.getString("USER_TOKEN", "") ?: ""
+        set(value) = storeDelegate.edit { putString("ACCESS_TOKEN", value) }
+        get() = storeDelegate.getString("ACCESS_TOKEN", "") ?: ""
 
     override var refreshToken: String
         set(value) = storeDelegate.edit { putString("REFRESH_TOKEN", value) }
