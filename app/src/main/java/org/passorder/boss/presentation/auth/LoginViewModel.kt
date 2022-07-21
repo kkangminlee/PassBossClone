@@ -10,6 +10,7 @@ import org.passorder.domain.entity.LoginToken
 import org.passorder.domain.entity.PostLogin
 import org.passorder.domain.entity.User
 import org.passorder.domain.repository.AuthRepository
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,7 +28,7 @@ class LoginViewModel @Inject constructor(
     val pw = MutableStateFlow("")
 
     val isInputBlank: Boolean
-        get() = id.value.isNullOrBlank() || pw.value.isNullOrBlank()
+        get() = id.value.isBlank() || pw.value.isBlank()
 
     fun postLogin(request: PostLogin) {
         viewModelScope.launch {
@@ -36,9 +37,12 @@ class LoginViewModel @Inject constructor(
             }.onSuccess {
                 dataStore.userUUID = it.identifier
                 dataStore.accessToken = it.accessToken
+                dataStore.refreshToken = it.refreshToken
                 _loginInfo.emit(Event.Success(it))
             }.onFailure {
-                _loginInfo.emit(Event.Failure("아이디나 패스워드가 일치하지 않습니다."))
+                if (it is HttpException) {
+                    _loginInfo.emit(Event.Failure("서버 통신 에러 error code: ${it.code()}"))
+                }
             }
         }
     }
@@ -47,11 +51,14 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 repository.getUser(dataStore.userUUID)
-            }.fold({
+            }.onSuccess {
                 dataStore.storeUUID = it.storeIdentifier
                 _userInfo.value = it
-            }, {
-            })
+            }.onFailure {
+                if (it is HttpException) {
+                    _loginInfo.emit(Event.Failure("서버 통신 에러 error code: ${it.code()}"))
+                }
+            }
         }
     }
 

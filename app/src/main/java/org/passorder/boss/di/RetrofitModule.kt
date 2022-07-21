@@ -60,5 +60,5 @@ object RetrofitModule {
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
-    private const val BASE_URL = "https://development.passorder.me:9999/v2/"
+    private const val BASE_URL = "https://staging.passorder.me:9999/v2/"
 }
