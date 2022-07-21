@@ -38,11 +38,11 @@ class NoticeStoreFragment: BindingFragment<FragmentNoticeStoreBinding>(R.layout.
     // 뷰모델에서 오는 Flow 관찰
     private fun observe() {
         // 메뉴 품절 알람 값 리사이클러뷰 어뎁터에 적용
-        viewModel.noticeStore.flowWithLifecycle(lifecycle)
+        viewModel.noticeStore.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 Log.d("kangmi", it.toString())
                 adapter?.setItems(it)
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onDestroyView() {

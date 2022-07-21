@@ -36,11 +36,11 @@ class NoticeMenuFragment: BindingFragment<FragmentNoticeMenuBinding>(R.layout.fr
 
     private fun observe() {
         // 매장 미오픈 알람 값 리사이클러뷰 어뎁터에 적용
-        viewModel.noticeStore.flowWithLifecycle(lifecycle)
+        viewModel.noticeStore.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 Log.d("kangmi", it.toString())
                 adapter?.setItems(it)
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onDestroyView() {
