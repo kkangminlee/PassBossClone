@@ -1,6 +1,5 @@
 package org.passorder.boss.presentation.notice
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,6 +48,7 @@ class NoticeViewModel @Inject constructor(
         val date = Date(System.currentTimeMillis())
         val endDate = sdf.format(date)
 
+        // 서버 통신을 위한 파라미터 전달
         getNotice(kind, startDate, endDate)
     }
 }
