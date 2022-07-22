@@ -2,6 +2,7 @@ package org.passorder.boss.presentation.notice.store
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -39,9 +40,12 @@ class NoticeStoreFragment: BindingFragment<FragmentNoticeStoreBinding>(R.layout.
         // 메뉴 품절 알람 값 리사이클러뷰 어뎁터에 적용
         viewModel.noticeValue.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
+                binding.tvEmpty.isVisible = it.isEmpty()
+                binding.rvOpen.isVisible = it.isNotEmpty()
                 adapter?.setItems(it)
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
+        // 서버 에러 코드 토스트
         viewModel.errorMsg.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 toast(it)

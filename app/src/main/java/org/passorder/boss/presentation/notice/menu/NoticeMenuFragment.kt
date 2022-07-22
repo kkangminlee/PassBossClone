@@ -2,6 +2,7 @@ package org.passorder.boss.presentation.notice.menu
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,9 +17,10 @@ import org.passorder.ui.base.BindingFragment
 import org.passorder.ui.fragment.toast
 
 @AndroidEntryPoint
-class NoticeMenuFragment: BindingFragment<FragmentNoticeMenuBinding>(R.layout.fragment_notice_menu) {
+class NoticeMenuFragment :
+    BindingFragment<FragmentNoticeMenuBinding>(R.layout.fragment_notice_menu) {
     private val viewModel by viewModels<NoticeViewModel>()
-    private var adapter : NoticeAdapter? = null
+    private var adapter: NoticeAdapter? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,9 +40,12 @@ class NoticeMenuFragment: BindingFragment<FragmentNoticeMenuBinding>(R.layout.fr
         // 매장 미오픈 알람 값 리사이클러뷰 어뎁터에 적용
         viewModel.noticeValue.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
+                binding.tvEmpty.isVisible = it.isEmpty()
+                binding.rvMenu.isVisible = it.isNotEmpty()
                 adapter?.setItems(it)
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
+        // 서버 에러 코드 토스트
         viewModel.errorMsg.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 toast(it)
