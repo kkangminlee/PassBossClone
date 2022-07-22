@@ -34,7 +34,7 @@ class AuthInterceptor @Inject constructor(
                             refreshTokenResponse.body()?.string(),
                             ResponseLogin::class.java
                         )
-
+                    // 새로 받아온 accessToken DataStore 에 저장
                     with(dataStore) {
                         accessToken = responseToken.accessToken
                     }
