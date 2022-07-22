@@ -44,8 +44,8 @@ class OrderViewModel @Inject constructor(
             runCatching {
                 repository.putOrderStatus(uuid)
             }.onSuccess {
-                val a = NewStatus(it.status, pos)
-                _orderStatus.value = a
+                val newStatus = NewStatus(it.status, pos)
+                _orderStatus.value = newStatus
             }.onFailure {
                 if (it is HttpException) {
                     _errorMsg.emit("서버 통신 에러 error code: ${it.code()}")
