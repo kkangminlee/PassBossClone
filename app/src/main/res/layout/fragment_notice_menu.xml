@@ -27,7 +27,6 @@
             android:layout_marginHorizontal="12dp"
             android:layout_marginTop="12dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_notice_menu" />
-
+            tools:listitem="@layout/item_notice_common" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

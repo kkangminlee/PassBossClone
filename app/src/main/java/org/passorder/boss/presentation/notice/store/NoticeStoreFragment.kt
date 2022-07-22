@@ -14,12 +14,12 @@ import org.passorder.boss.databinding.FragmentNoticeStoreBinding
 import org.passorder.boss.presentation.notice.NoticeAdapter
 import org.passorder.boss.presentation.notice.NoticeViewModel
 import org.passorder.ui.base.BindingFragment
+import org.passorder.ui.fragment.toast
 
 @AndroidEntryPoint
 class NoticeStoreFragment: BindingFragment<FragmentNoticeStoreBinding>(R.layout.fragment_notice_store) {
     private val viewModel by viewModels<NoticeViewModel>()
     private var adapter : NoticeAdapter? = null
-    private var page = 1
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,10 +38,14 @@ class NoticeStoreFragment: BindingFragment<FragmentNoticeStoreBinding>(R.layout.
     // 뷰모델에서 오는 Flow 관찰
     private fun observe() {
         // 메뉴 품절 알람 값 리사이클러뷰 어뎁터에 적용
-        viewModel.noticeStore.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+        viewModel.noticeValue.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
-                Log.d("kangmi", it.toString())
                 adapter?.setItems(it)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.errorMsg.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach {
+                toast(it)
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 

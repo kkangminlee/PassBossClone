@@ -14,6 +14,7 @@ import org.passorder.boss.databinding.FragmentNoticeMenuBinding
 import org.passorder.boss.presentation.notice.NoticeAdapter
 import org.passorder.boss.presentation.notice.NoticeViewModel
 import org.passorder.ui.base.BindingFragment
+import org.passorder.ui.fragment.toast
 
 @AndroidEntryPoint
 class NoticeMenuFragment: BindingFragment<FragmentNoticeMenuBinding>(R.layout.fragment_notice_menu) {
@@ -36,10 +37,14 @@ class NoticeMenuFragment: BindingFragment<FragmentNoticeMenuBinding>(R.layout.fr
 
     private fun observe() {
         // 매장 미오픈 알람 값 리사이클러뷰 어뎁터에 적용
-        viewModel.noticeStore.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+        viewModel.noticeValue.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
-                Log.d("kangmi", it.toString())
                 adapter?.setItems(it)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.errorMsg.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach {
+                toast(it)
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
