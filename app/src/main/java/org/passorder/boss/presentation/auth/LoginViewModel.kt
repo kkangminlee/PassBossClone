@@ -41,10 +41,7 @@ class LoginViewModel @Inject constructor(
                 _loginInfo.emit(Event.Success(it))
             }.onFailure {
                 if (it is HttpException) {
-                    when (it.code()) {
-                        404 -> _loginInfo.emit(Event.Failure("아이디 또는 비밀번호를 확인해주세요"))
-                        else -> _loginInfo.emit(Event.Failure("서버 통신 에러 error code: ${it.code()}"))
-                    }
+                    _loginInfo.emit(Event.Failure("서버 통신 에러 error code: ${it.code()}"))
                 }
             }
         }
