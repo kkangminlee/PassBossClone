@@ -13,6 +13,7 @@ import org.passorder.boss.R
 import org.passorder.boss.databinding.FragmentOrderBinding
 import org.passorder.domain.entity.SetOrder
 import org.passorder.ui.base.BindingFragment
+import org.passorder.ui.fragment.toast
 
 @AndroidEntryPoint
 class OrderFragment : BindingFragment<FragmentOrderBinding>(R.layout.fragment_order) {
@@ -26,24 +27,31 @@ class OrderFragment : BindingFragment<FragmentOrderBinding>(R.layout.fragment_or
     }
 
     private fun initView() {
-        adapter = OrderListAdapter{
-            viewModel.putOrderStatus(it.identifier)
+        adapter = OrderListAdapter { it, pos ->
+            viewModel.putOrderStatus(it.identifier, pos)
         }
         binding.rvOrderList.adapter = adapter
     }
 
     private fun observe() {
-        viewModel.currentOrder.flowWithLifecycle(lifecycle)
+        viewModel.currentOrder.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 binding.clEmpty.isVisible = it.isEmpty()
                 binding.rvOrderList.isVisible = it.isNotEmpty()
                 adapter?.submitList(it)
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        viewModel.orderStatus.flowWithLifecycle(lifecycle)
+        viewModel.orderStatus.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
-                //Todo Status 응답값 처리
-            }.launchIn(lifecycleScope)
+                val newList = adapter?.currentList?.toMutableList()
+                newList?.get(it.position)?.status = it.status
+                adapter?.notifyItemChanged(it.position)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.errorMsg.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach {
+                toast(it)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onResume() {

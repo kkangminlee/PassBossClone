@@ -14,7 +14,7 @@ import org.passorder.boss.util.OrderStatus
 import org.passorder.boss.util.TakeOut
 import org.passorder.domain.entity.Order
 
-class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
+class OrderListAdapter(private val itemClick: (Order, Int) -> (Unit)) :
     ListAdapter<Order, OrderListAdapter.OrderListViewHolder>(DIFF_UTIL) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderListViewHolder {
         val binding =
@@ -23,15 +23,15 @@ class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
     }
 
     override fun onBindViewHolder(holder: OrderListViewHolder, position: Int) {
-        holder.onBind(getItem(position))
+        holder.onBind(getItem(position), position)
     }
 
     class OrderListViewHolder(
         private val binding: ItemHistoryListBinding,
-        private val itemClick: (Order) -> (Unit)
+        private val itemClick: (Order, Int) -> (Unit)
     ) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun onBind(item: Order) {
+        fun onBind(item: Order, position: Int) {
             val inflater = LayoutInflater.from(binding.root.context)
             with(binding) {
                 binding.data = item
@@ -49,31 +49,17 @@ class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
                     }
                 }
 
-//                                when(item.tableNumber) {
-//                    TakeOut.TAKEOUT.takeNo -> {
-//
-//                    }
-//
-//                    TakeOut.DINE.takeNo -> {
-//
-//                    }
-//
-//                    TakeOut.UNKNOWN.takeNo -> {
-//
-//                    }
-//
-//                    else -> {}
-//                }
 
+                // 버튼 클릭시 데이터 클래스와, 해당하는 포지션을 같이 전달
                 tvStatus.setOnClickListener {
-                    itemClick(item)
+                    itemClick(item, position)
                 }
 
-                menuContainer.run{
+                menuContainer.run {
                     val createMenuBinding = { ItemMenuListBinding.inflate(inflater) }
 
-                    fun addMenuItems(){
-                        item.menus.map {  menu ->
+                    fun addMenuItems() {
+                        item.menus.map { menu ->
                             createMenuBinding().apply {
                                 tvCoffee.text = menu.name
                                 tvPrice.text = "${menu.price}원"
@@ -81,7 +67,7 @@ class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
 
                                 menu.options.map { option ->
                                     TextView(binding.root.context).apply {
-                                        setTextSize(TypedValue.COMPLEX_UNIT_SP,16f)
+                                        setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
                                         text = option.name
                                     }
                                 }.forEach {
@@ -92,8 +78,9 @@ class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
                             addView(it.root)
                         }
                     }
-                    fun addUsedCouponItems(){
-                        item.usedCoupons.map {  coupon ->
+
+                    fun addUsedCouponItems() {
+                        item.usedCoupons.map { coupon ->
                             createMenuBinding().apply {
                                 tvCoffee.text = coupon.couponName
                                 tvPrice.text = "-${coupon.benefit}원"
@@ -119,7 +106,7 @@ class OrderListAdapter(private val itemClick: (Order) -> (Unit)) :
                 oldItem: Order,
                 newItem: Order
             ): Boolean {
-                return oldItem.createdDate == newItem.createdDate
+                return oldItem.identifier == newItem.identifier
             }
 
             override fun areContentsTheSame(

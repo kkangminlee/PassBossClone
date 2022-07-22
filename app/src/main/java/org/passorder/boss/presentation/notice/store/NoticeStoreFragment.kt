@@ -1,8 +1,8 @@
 package org.passorder.boss.presentation.notice.store
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,12 +14,12 @@ import org.passorder.boss.databinding.FragmentNoticeStoreBinding
 import org.passorder.boss.presentation.notice.NoticeAdapter
 import org.passorder.boss.presentation.notice.NoticeViewModel
 import org.passorder.ui.base.BindingFragment
+import org.passorder.ui.fragment.toast
 
 @AndroidEntryPoint
 class NoticeStoreFragment: BindingFragment<FragmentNoticeStoreBinding>(R.layout.fragment_notice_store) {
     private val viewModel by viewModels<NoticeViewModel>()
     private var adapter : NoticeAdapter? = null
-    private var page = 1
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,11 +38,18 @@ class NoticeStoreFragment: BindingFragment<FragmentNoticeStoreBinding>(R.layout.
     // 뷰모델에서 오는 Flow 관찰
     private fun observe() {
         // 메뉴 품절 알람 값 리사이클러뷰 어뎁터에 적용
-        viewModel.noticeStore.flowWithLifecycle(lifecycle)
+        viewModel.noticeValue.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
-                Log.d("kangmi", it.toString())
+                binding.tvEmpty.isVisible = it.isEmpty()
+                binding.rvOpen.isVisible = it.isNotEmpty()
                 adapter?.setItems(it)
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        // 서버 에러 코드 토스트
+        viewModel.errorMsg.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach {
+                toast(it)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onDestroyView() {

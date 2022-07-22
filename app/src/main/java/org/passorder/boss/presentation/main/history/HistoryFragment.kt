@@ -2,6 +2,7 @@ package org.passorder.boss.presentation.main.history
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -20,12 +21,13 @@ import org.passorder.data.model.request.RequestOrder
 import org.passorder.domain.PassDataStore
 import org.passorder.domain.entity.SetCount
 import org.passorder.ui.base.BindingFragment
+import org.passorder.ui.fragment.toast
 import java.util.*
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HistoryFragment: BindingFragment<FragmentHistoryBinding>(R.layout.fragment_history) {
+class HistoryFragment : BindingFragment<FragmentHistoryBinding>(R.layout.fragment_history) {
     @Inject
     lateinit var dataStore: PassDataStore
     private var adapter: HistoryPagingAdapter? = null
@@ -41,11 +43,23 @@ class HistoryFragment: BindingFragment<FragmentHistoryBinding>(R.layout.fragment
     private fun initView() {
         adapter = HistoryPagingAdapter {
         }
-        binding.rvLastOrder.adapter = adapter
+        // 페이징어뎁터와 LoadStateAdapter 연결하는 로직
+        binding.rvLastOrder.adapter = adapter?.withLoadStateFooter(
+            PagingLoadStateAdapter { adapter?.retry() }
+        )
+        // 리사이클러뷰 아이템 간 구분선 표시
         val decoration = DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL)
         binding.rvLastOrder.addItemDecoration(decoration)
 
-
+        // 리스트가 있을때와 없을때 각기다른 화면 보여주는 로직
+        adapter?.addLoadStateListener {
+            // 로딩이 끝났음을 확인하여, adapter 의 item 개수를 확인하여 empty 표시
+            if (it.append.endOfPaginationReached) {
+                binding.clEmpty.isVisible = adapter?.itemCount == 0
+            } else {
+                binding.clEmpty.isVisible = false
+            }
+        }
     }
 
     private fun initEvent() {
@@ -53,7 +67,7 @@ class HistoryFragment: BindingFragment<FragmentHistoryBinding>(R.layout.fragment
         binding.clDate.setOnClickListener {
             val dialog = DatePickerDialog()
             dialog.onDateListener { start, end ->
-                setPeriod(start,end)
+                setPeriod(start, end)
             }
             dialog.show(requireFragmentManager(), "dialog")
         }
@@ -61,31 +75,38 @@ class HistoryFragment: BindingFragment<FragmentHistoryBinding>(R.layout.fragment
 
     private fun observe() {
         // 서버 통신 후 받은 총 판매량
-        viewModel.orderCount.flowWithLifecycle(lifecycle)
+        viewModel.orderCount.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 binding.tvOrderCount.text = "${it}개"
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         // 서버 통신 후 받은 총 매출액
-        viewModel.money.flowWithLifecycle(lifecycle)
+        viewModel.money.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 binding.tvMoney.text = "${it}원"
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        // 에러 코드 토스트 메세지
+        viewModel.errorMsg.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach {
+                toast(it)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     // 다이얼로그에서 월 선택 후 해당 값으로 판매량, 총 매출, 주문 내역(페이징) 서버 통신
     private fun setPeriod(start: String, end: String) {
         val includeDump = gsonToJson(listOf(dataStore.storeUUID))
-        val orderCount = gsonToJson(listOf(false,false,false,false,false,false,false,false))
-        val totalMoney = gsonToJson(listOf(false,false,false,false,false,false,false,true))
+        val orderCount = gsonToJson(listOf(false, false, false, false, false, false, false, false))
+        val totalMoney = gsonToJson(listOf(false, false, false, false, false, false, false, true))
         binding.tvStartDetail.text = start
         binding.tvEndDetail.text = end
-        viewModel.getOrderCount(SetCount(start,end,includeDump, orderCount))
-        viewModel.getTotalMoney(SetCount(start,end,includeDump,totalMoney))
+        viewModel.getOrderCount(SetCount(start, end, includeDump, orderCount))
+        viewModel.getTotalMoney(SetCount(start, end, includeDump, totalMoney))
 
         // orderList 함수에서 받은 PagingData 값을 PagingAdapter 에 넣음
         lifecycleScope.launch {
-            viewModel.orderList(RequestOrder(1,10,1,start,end)).flowWithLifecycle(lifecycle)
+            viewModel.pagingOrderList(RequestOrder(1, 10, 1, start, end))
+                .flowWithLifecycle(lifecycle)
                 .collectLatest {
                     adapter?.submitData(it)
                 }
@@ -95,9 +116,11 @@ class HistoryFragment: BindingFragment<FragmentHistoryBinding>(R.layout.fragment
     override fun onResume() {
         super.onResume()
         val cal = Calendar.getInstance()
-        val yearMonth = "${cal[Calendar.YEAR]}-${String.format("%02d",cal[Calendar.MONTH]+1)}"
-        val startDate = "$yearMonth-${String.format("%02d",cal.getActualMinimum(Calendar.DAY_OF_MONTH))}"
-        val endDate = "$yearMonth-${String.format("%02d",cal.getActualMaximum(Calendar.DAY_OF_MONTH))}"
+        val yearMonth = "${cal[Calendar.YEAR]}-${String.format("%02d", cal[Calendar.MONTH] + 1)}"
+        val startDate =
+            "$yearMonth-${String.format("%02d", cal.getActualMinimum(Calendar.DAY_OF_MONTH))}"
+        val endDate =
+            "$yearMonth-${String.format("%02d", cal.getActualMaximum(Calendar.DAY_OF_MONTH))}"
         setPeriod(startDate, endDate)
     }
 

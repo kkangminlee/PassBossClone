@@ -21,6 +21,7 @@ class NoticeAdapter : RecyclerView.Adapter<NoticeAdapter.NoticeStoreViewHolder>(
 
     override fun getItemCount(): Int = data.size
 
+    // 아이템 추가 함수
     fun setItems(newItems: List<Notice>) {
         data.clear()
         data.addAll(newItems)

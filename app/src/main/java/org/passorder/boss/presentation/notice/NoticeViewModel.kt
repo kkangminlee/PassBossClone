@@ -1,6 +1,5 @@
 package org.passorder.boss.presentation.notice
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -8,6 +7,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.passorder.domain.entity.Notice
 import org.passorder.domain.repository.NoticeRepository
+import org.passorder.ui.base.BaseViewModel
+import retrofit2.HttpException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -15,9 +16,9 @@ import javax.inject.Inject
 @HiltViewModel
 class NoticeViewModel @Inject constructor(
     private val repository: NoticeRepository
-): ViewModel() {
-    private val _noticeStore = MutableStateFlow<List<Notice>>(listOf())
-    val noticeStore = _noticeStore.asStateFlow()
+): BaseViewModel() {
+    private val _noticeValue = MutableStateFlow<List<Notice>>(listOf())
+    val noticeValue = _noticeValue.asStateFlow()
 
     // 매장 미오픈 or 메뉴 품절 리스트 불러오는 서버통신 로직
     private fun getNotice(kind: Int, start:String, end: String) {
@@ -25,7 +26,11 @@ class NoticeViewModel @Inject constructor(
             runCatching {
                 repository.getNotice(kind, start, end)
             }.onSuccess {
-                _noticeStore.value = it
+                _noticeValue.value = it
+            }.onFailure {
+                if (it is HttpException) {
+                    _errorMsg.emit("서버 통신 에러 error code: ${it.code()}")
+                }
             }
         }
     }
@@ -43,6 +48,7 @@ class NoticeViewModel @Inject constructor(
         val date = Date(System.currentTimeMillis())
         val endDate = sdf.format(date)
 
+        // 서버 통신을 위한 파라미터 전달
         getNotice(kind, startDate, endDate)
     }
 }

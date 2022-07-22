@@ -1,6 +1,5 @@
 package org.passorder.boss.presentation.main.history
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -16,13 +15,15 @@ import org.passorder.data.model.request.RequestOrder
 import org.passorder.data.service.OrderService
 import org.passorder.domain.entity.SetCount
 import org.passorder.domain.repository.OrderRepository
+import org.passorder.ui.base.BaseViewModel
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     private val repository: OrderRepository,
     private val service: OrderService
-) : ViewModel() {
+) : BaseViewModel() {
     private val _money = MutableStateFlow(0)
     val money = _money.asStateFlow()
 
@@ -30,7 +31,7 @@ class HistoryViewModel @Inject constructor(
     val orderCount = _orderCount.asStateFlow()
 
     // 지난 주문 내역 리스트 서버 통신 페이징으로 가져오기
-    fun orderList(request: RequestOrder) = Pager(
+    fun pagingOrderList(request: RequestOrder) = Pager(
         config = PagingConfig(10),
         pagingSourceFactory = { OrderPagingSource(service, request) }
     ).flow.map {  pagingData ->
@@ -50,6 +51,10 @@ class HistoryViewModel @Inject constructor(
                     count += response.count
                 }
                 _orderCount.value = count
+            }.onFailure {
+                if (it is HttpException) {
+                    _errorMsg.emit("서버 통신 에러 error code: ${it.code()}")
+                }
             }
         }
     }
@@ -65,6 +70,10 @@ class HistoryViewModel @Inject constructor(
                     money += response.usedPassorderPoint
                 }
                 _money.value = money
+            }.onFailure {
+                if (it is HttpException) {
+                    _errorMsg.emit("서버 통신 에러 error code: ${it.code()}")
+                }
             }
         }
     }
