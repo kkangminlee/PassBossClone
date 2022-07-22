@@ -45,9 +45,7 @@ class OrderFragment : BindingFragment<FragmentOrderBinding>(R.layout.fragment_or
             .onEach {
                 val newList = adapter?.currentList?.toMutableList()
                 newList?.get(it.position)?.status = it.status
-                adapter?.apply {
-                    notifyItemChanged(it.position)
-                }
+                adapter?.notifyItemChanged(it.position)
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.errorMsg.flowWithLifecycle(viewLifecycleOwner.lifecycle)
