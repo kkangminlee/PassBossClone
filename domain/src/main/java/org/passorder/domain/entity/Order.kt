@@ -17,7 +17,7 @@ data class Order(
     val tableNumber: Int,
     var methodOfPayment: Int,
     val number: Number,
-    val status: Int,
+    var status: Int,
     val identifier: String,
     val menus: List<Menu>,
     val usedCoupons: List<Coupon>,
