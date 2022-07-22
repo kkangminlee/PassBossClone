@@ -1,18 +1,19 @@
 package org.passorder.boss.presentation.main
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.passorder.domain.entity.Store
 import org.passorder.domain.repository.OrderRepository
+import org.passorder.ui.base.BaseViewModel
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: OrderRepository
-): ViewModel() {
+) : BaseViewModel() {
     private val _isOpenState = MutableSharedFlow<Boolean>()
     val isOpenState = _isOpenState.asSharedFlow()
 
@@ -30,7 +31,9 @@ class MainViewModel @Inject constructor(
             }.onSuccess {
                 _storeInfo.value = it
             }.onFailure {
-
+                if (it is HttpException) {
+                    _errorMsg.emit("서버 통신 에러 error code: ${it.code()}")
+                }
             }
         }
     }
@@ -42,7 +45,9 @@ class MainViewModel @Inject constructor(
             }.onSuccess {
                 _isOpenState.emit(isOpen)
             }.onFailure {
-
+                if (it is HttpException) {
+                    _errorMsg.emit("서버 통신 에러 error code: ${it.code()}")
+                }
             }
         }
     }
@@ -51,10 +56,10 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 repository.setMinTimeStore(time)
-            }.onSuccess {
-
             }.onFailure {
-
+                if (it is HttpException) {
+                    _errorMsg.emit("서버 통신 에러 error code: ${it.code()}")
+                }
             }
         }
     }

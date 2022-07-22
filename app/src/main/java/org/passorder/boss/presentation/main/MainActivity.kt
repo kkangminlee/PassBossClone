@@ -19,6 +19,7 @@ import org.passorder.boss.presentation.notice.NoticeActivity
 import org.passorder.domain.PassDataStore
 import org.passorder.ui.base.BindingActivity
 import org.passorder.ui.context.stringListFrom
+import org.passorder.ui.context.toast
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -97,6 +98,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     spinnerTime.setSelection(time.indexOf(it.minimumPickupTime))
                     ivCheckOpen.isSelected = it.isOpen
                 }
+            }.launchIn(lifecycleScope)
+
+        viewModel.errorMsg.flowWithLifecycle(lifecycle)
+            .onEach {
+                toast(it)
             }.launchIn(lifecycleScope)
     }
 }
