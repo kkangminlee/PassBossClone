@@ -2,9 +2,12 @@ package org.passorder.data.datasource.remote
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.handleCoroutineException
 import org.passorder.data.model.request.RequestOrder
 import org.passorder.data.model.response.ResponseOrder
 import org.passorder.data.service.OrderService
+import kotlin.random.Random
 
 class OrderPagingSource(
     private val service: OrderService,
@@ -22,6 +25,10 @@ class OrderPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ResponseOrder> {
         val currentPosition = params.key ?: 1
         val response = runCatching {
+            delay(5000)
+            if(Random.nextFloat() < 0.5) {
+                throw Exception("error asdfa")
+            }
             service.getOrderList(
                 page = currentPosition,
                 filter = 1,
