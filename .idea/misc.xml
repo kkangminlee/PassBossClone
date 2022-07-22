@@ -37,6 +37,7 @@
         <entry key="app/src/main/res/layout/fragment_order.xml" value="0.34814453125" />
         <entry key="app/src/main/res/layout/fragment_sold_out.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/item_history_list.xml" value="0.5494666689918155" />
+        <entry key="app/src/main/res/layout/item_load_state.xml" value="0.5245193481445313" />
         <entry key="app/src/main/res/layout/item_menu_list.xml" value="0.33089752197265626" />
         <entry key="app/src/main/res/layout/item_notice_common.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/item_notice_menu.xml" value="0.375" />

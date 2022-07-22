@@ -46,7 +46,6 @@ class OrderFragment : BindingFragment<FragmentOrderBinding>(R.layout.fragment_or
                 val newList = adapter?.currentList?.toMutableList()
                 newList?.get(it.position)?.status = it.status
                 adapter?.apply {
-                    submitList(newList)
                     notifyItemChanged(it.position)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
